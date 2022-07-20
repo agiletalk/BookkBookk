@@ -6,12 +6,22 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 @main
 struct BookkBookkApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SearchView(
+                store: Store(
+                    initialState: SearchState(),
+                    reducer: searchReducer.debug(),
+                    environment: SearchEnvironment(
+                        bookClient: BookClient.live,
+                        mainQueue: .main
+                    )
+                )
+            )
         }
     }
 }
